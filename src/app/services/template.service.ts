@@ -5,6 +5,7 @@ export interface TemplateParams {
   customerName: string;
   promotionDetails: string;
   expiryDate: string;
+  offerLink: string;
 }
 
 export interface MessageTemplate {
@@ -20,7 +21,8 @@ export class TemplateService {
   private initialParams: TemplateParams = {
     customerName: '',
     promotionDetails: '',
-    expiryDate: ''
+    expiryDate: '',
+    offerLink: ''
   };
 
   private templateParamsSource = new BehaviorSubject<TemplateParams>(this.initialParams);
@@ -58,6 +60,7 @@ export class TemplateService {
     this.templatesSource.next(templates);
   }
 
+
   updateTemplate(updated: MessageTemplate) {
     const templates = this.templatesSource.value.map(t => t.id === updated.id ? updated : t);
     this.templatesSource.next(templates);
@@ -66,5 +69,13 @@ export class TemplateService {
   deleteTemplate(id: string) {
     const templates = this.templatesSource.value.filter(t => t.id !== id);
     this.templatesSource.next(templates);
+  }
+
+  getHeaderType(): 'Image' | 'Text' {
+    return this.headerTypeSource.value;
+  }
+
+  getHeaderImage(): string | null {
+    return this.headerImageSource.value;
   }
 }

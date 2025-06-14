@@ -11,7 +11,7 @@
 We're excited to offer you {{ params.promotionDetails || '{{offer_details}}' }}! This exclusive deal is only available until {{ params.expiryDate || '{{expiry_date}}' }}.
 
 Click the link below to redeem your offer.
-<a href="#" class="text-blue-600">https://example.com/offer</a></p>
+<a href="#" class="text-blue-600">{{params.offerLink||'{{offer_link}}'}}</a></p>
     <div class="text-right text-xs text-muted-foreground mt-2">10:24 AM</div>
   </div>
 </div>

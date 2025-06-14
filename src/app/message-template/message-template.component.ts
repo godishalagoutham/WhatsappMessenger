@@ -11,7 +11,8 @@ export class MessageTemplateComponent implements OnInit, OnDestroy {
   templateParams: TemplateParams = {
     customerName: '',
     promotionDetails: '',
-    expiryDate: ''
+    expiryDate: '',
+    offerLink: ''
   };
   headerType: 'Image' | 'Text' = 'Image';
   headerText: string = '';

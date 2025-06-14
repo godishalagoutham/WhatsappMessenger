@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Contact, ContactService } from '../services/contact.service';
 import * as Papa from 'papaparse';
 import { Subscription } from 'rxjs';
+import { CampaignService } from '../services/campaign.service';
 
 interface RawContact {
   [key: string]: string;
@@ -18,7 +19,7 @@ export class ContactUploadComponent implements OnInit, OnDestroy {
   contacts: Contact[] = [];
   private subscription: Subscription = new Subscription();
 
-  constructor(private contactService: ContactService) {}
+  constructor(private contactService: ContactService,private campaignService: CampaignService) {}
 
   ngOnInit(): void {
     this.subscription = this.contactService.contacts$.subscribe(contacts => {
@@ -33,6 +34,9 @@ export class ContactUploadComponent implements OnInit, OnDestroy {
   onFileSelected(event: Event): void {
     const element = event.currentTarget as HTMLInputElement;
     let file = element.files ? element.files[0] : null;
+    if (file) {
+      this.campaignService.setContactsFile(file); 
+    }
     this.processFile(file);
   }
 

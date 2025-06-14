@@ -48,6 +48,10 @@
       </div>
     </div>
   </div>
+  <div class="mb-4">
+    <label class="block mb-2 font-medium">PDF Caption</label>
+    <input type="text" [(ngModel)]="pdfCaption" class="w-full px-3 py-2 border rounded" placeholder="Enter caption for the PDF" />
+  </div>
   <!-- Send Button -->
   <div class="mt-8 flex gap-4">
     <button (click)="sendPdf()" [disabled]="!pdfFile || selectedContacts.size === 0 || sending" class="bg-primary text-white px-8 py-2 rounded font-semibold disabled:opacity-50">{{ sending ? 'Sending...' : 'Send PDF' }}</button>
@@ -79,4 +83,5 @@
       </tbody>
     </table>
   </div>
+  
 </div> 

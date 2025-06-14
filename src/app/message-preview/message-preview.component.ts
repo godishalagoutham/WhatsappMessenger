@@ -8,7 +8,7 @@ import { TemplateParams, TemplateService } from '../services/template.service';
   styleUrls: ['./message-preview.component.scss']
 })
 export class MessagePreviewComponent implements OnInit, OnDestroy {
-  params: TemplateParams = { customerName: '', promotionDetails: '', expiryDate: '' };
+  params: TemplateParams = { customerName: '', promotionDetails: '', expiryDate: '', offerLink: '' };
   headerType: 'Image' | 'Text' = 'Image';
   headerImage: string | null = null;
   private subscription: Subscription = new Subscription();

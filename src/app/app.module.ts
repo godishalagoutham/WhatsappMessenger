@@ -10,9 +10,10 @@ import { MessageTemplateComponent } from './message-template/message-template.co
 import { MessagePreviewComponent } from './message-preview/message-preview.component';
 import { DeliveryAnalyticsComponent } from './delivery-analytics/delivery-analytics.component';
 import { ContactTableComponent } from './contact-table/contact-table.component';
-import { PdfShareComponent } from './pdf-share.component';
+import { PdfShareComponent } from './pdf-share/pdf-share.component';
 import { LucideAngularModule, Upload, Users, Bell, User, FileText } from 'lucide-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     LucideAngularModule.pick({ Upload, Users, Bell, User, FileText })
   ],
   providers: [],

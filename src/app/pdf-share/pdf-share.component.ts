@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Contact, ContactService } from './services/contact.service';
+import { Contact, ContactService } from '../services/contact.service';
 import { Subscription } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { CampaignService } from '../services/campaign.service';
 
 interface PdfSendStatus {
   contact: Contact;
@@ -26,9 +28,10 @@ export class PdfShareComponent implements OnInit, OnDestroy {
   page = 1;
   pageSize = 3;
   totalPages = 1;
+  pdfCaption: string = '';
   private subscription: Subscription = new Subscription();
 
-  constructor(private contactService: ContactService) {}
+  constructor(private contactService: ContactService, private campaignService: CampaignService) {}
 
   ngOnInit(): void {
     this.subscription = this.contactService.contacts$.subscribe(contacts => {
@@ -106,13 +109,18 @@ export class PdfShareComponent implements OnInit, OnDestroy {
     this.sending = true;
     this.sendStatus = [];
     const selected = this.contacts.filter(c => this.selectedContacts.has(c.phone));
-    selected.forEach(contact => {
-      setTimeout(() => {
-        this.sendStatus.push({ contact, status: 'success' });
-        if (this.sendStatus.length === selected.length) {
-          this.sending = false;
-        }
-      }, 500 + Math.random() * 1000);
+
+    const formData = new FormData();
+    formData.append('pdfFile', this.pdfFile);
+    formData.append('caption', this.pdfCaption);
+    formData.append('contacts', JSON.stringify(selected)); 
+
+    this.campaignService.sendPDF(formData).subscribe({
+      next: (res) => { this.sending = false;alert('PDF message sent!')},
+      error: (err) => {
+        this.sending = false;
+        alert('Failed to send: ' + err.message)
+      }
     });
   }
 
