@@ -1,0 +1,24 @@
+<div *ngIf="contacts.length > 0; else noContacts" class="overflow-x-auto">
+  <table class="min-w-full bg-white">
+    <tbody class="bg-white">
+      <tr *ngFor="let contact of contacts">
+        <td class="px-6 py-4 whitespace-nowrap border-b border-gray-200">{{ contact.name }}</td>
+        <td class="px-6 py-4 whitespace-nowrap border-b border-gray-200">{{ contact.phone }}</td>
+        <td class="px-6 py-4 whitespace-nowrap border-b border-gray-200">
+            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+              Valid
+            </span>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium border-b border-gray-200">
+          <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<ng-template #noContacts>
+    <div class="text-center py-8 text-muted-foreground">
+        <p>No contacts uploaded yet.</p>
+        <p class="text-sm">Please upload a CSV file to see the preview.</p>
+    </div>
+</ng-template>

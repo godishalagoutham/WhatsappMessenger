@@ -1,0 +1,46 @@
+<div class="space-y-4">
+  <div class="flex border-b">
+    <button
+      (click)="activeTab = 'csv'"
+      [ngClass]="{
+        'border-primary text-primary font-semibold': activeTab === 'csv',
+        'border-transparent text-muted-foreground hover:text-foreground': activeTab !== 'csv'
+      }"
+      class="flex items-center space-x-2 px-1 py-2 text-sm border-b-2 -mb-px transition-colors"
+    >
+      <lucide-icon name="upload" class="h-4 w-4"></lucide-icon>
+      <span>Upload CSV</span>
+    </button>
+    <button
+      (click)="activeTab = 'contacts'"
+      [ngClass]="{
+        'border-primary text-primary font-semibold': activeTab === 'contacts',
+        'border-transparent text-muted-foreground hover:text-foreground': activeTab !== 'contacts'
+      }"
+      class="flex items-center space-x-2 px-3 py-2 text-sm border-b-2 -mb-px transition-colors"
+    >
+      <lucide-icon name="users" class="h-4 w-4"></lucide-icon>
+      <span>Use Existing Contacts</span>
+    </button>
+  </div>
+
+  <div *ngIf="activeTab === 'csv'" class="pt-4">
+    <div
+      class="border-2 border-dashed border-border rounded-lg p-8 text-center bg-background hover:border-primary transition-colors"
+    >
+      <div class="flex flex-col items-center">
+        <div class="w-12 h-12 bg-muted rounded-full flex items-center justify-center mb-4">
+          <lucide-icon name="upload" class="h-6 w-6 text-muted-foreground"></lucide-icon>
+        </div>
+        <p class="mb-2 text-foreground">Drag and drop your CSV file here</p>
+        <p class="text-muted-foreground mb-4">or</p>
+        <button class="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2 rounded-md font-semibold text-sm">Browse Files</button>
+        <p class="text-xs text-muted-foreground mt-4">Supported format: .csv with columns for name and phone number</p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="activeTab === 'contacts'" class="pt-4 text-center">
+    <p class="text-muted-foreground">Existing contacts functionality will be available here.</p>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="space-y-6">
+  <div class="bg-white p-6 rounded-lg shadow">
+    <h2 class="text-xl font-semibold mb-4">Step 1: Select Contact Source</h2>
+    <app-contact-upload></app-contact-upload>
+  </div>
+
+  <div class="bg-white p-6 rounded-lg shadow">
+    <h2 class="text-xl font-semibold mb-4">Contact Preview</h2>
+    <app-contact-table></app-contact-table>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold mb-4">Step 2: Select Message Template</h2>
+      <app-message-template></app-message-template>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold mb-4">Message Preview</h2>
+      <app-message-preview></app-message-preview>
+    </div>
+  </div>
+
+  <div class="bg-white p-6 rounded-lg shadow">
+    <h2 class="text-xl font-semibold mb-4">Delivery Analytics</h2>
+    <app-delivery-analytics></app-delivery-analytics>
+  </div>
+
+ <div class="flex justify-center space-x-4 mt-6">
+    <button class="bg-secondary text-secondary-foreground hover:bg-secondary/80 px-8 py-2 rounded-md font-semibold">Edit Contacts</button>
+    <button class="bg-secondary text-secondary-foreground hover:bg-secondary/80 px-8 py-2 rounded-md font-semibold">Download Payload</button>
+    <button class="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-2 rounded-md font-semibold">Send Bulk Message</button>
+  </div>
+</div>
