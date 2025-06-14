@@ -14,6 +14,7 @@ import { PdfShareComponent } from './pdf-share/pdf-share.component';
 import { LucideAngularModule, Upload, Users, Bell, User, FileText } from 'lucide-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ContactService } from './services/contact.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     LucideAngularModule.pick({ Upload, Users, Bell, User, FileText })
   ],
-  providers: [],
+  providers: [ContactService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

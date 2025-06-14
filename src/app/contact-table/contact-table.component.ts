@@ -18,12 +18,10 @@ export class ContactTableComponent implements OnInit, OnDestroy {
   constructor(private contactService: ContactService) {}
 
   ngOnInit(): void {
-    this.subscription = this.contactService.contacts$.subscribe(contacts => {
-      // Set all statuses to 'Pending' when contacts are uploaded
-      this.contacts = contacts.map((c) => ({
-        ...c,
-        status: 'Pending'
-      }));
+    // Subscribe to contact updates
+    this.subscription = this.contactService.contacts$.subscribe((contacts: Contact[]) => {
+      this.contacts = contacts;
+      console.log(this.contacts)
       this.updatePagedContacts();
     });
   }
@@ -50,5 +48,20 @@ export class ContactTableComponent implements OnInit, OnDestroy {
     const start = (this.page - 1) * this.pageSize + 1;
     const end = Math.min(this.page * this.pageSize, this.contacts.length);
     return `Showing ${start}-${end} of ${this.contacts.length} contacts`;
+  }
+
+  getStatusClass(status: string | undefined): string {
+    switch (status) {
+      case 'Pending':
+        return 'status-badge-pending';
+      case 'Sent':
+        return 'status-badge-sent';
+      case 'Failed':
+        return 'status-badge-failed';
+      case 'Delivered':
+        return 'status-badge-delivered';
+      default:
+        return 'status-badge-pending';
+    }
   }
 }

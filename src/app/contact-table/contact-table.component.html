@@ -9,49 +9,45 @@
     </div>
   </div>
   <div class="overflow-x-auto">
-    <table class="min-w-full bg-white">
-      <thead>
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
         <tr>
-          <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Contact Name</th>
-          <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Phone Number</th>
-          <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
-          <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Actions</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
         </tr>
       </thead>
-      <tbody class="bg-white">
-        <tr *ngIf="pagedContacts.length === 0">
-          <td colspan="4" class="text-center py-8 text-muted-foreground">
-            No contacts uploaded yet. Please upload a CSV file to see the preview.
-          </td>
-        </tr>
+      <tbody class="bg-white divide-y divide-gray-200">
         <tr *ngFor="let contact of pagedContacts">
-          <td class="px-6 py-4 whitespace-nowrap border-b border-gray-200 font-medium">{{ contact.name }}</td>
-          <td class="px-6 py-4 whitespace-nowrap border-b border-gray-200">{{ contact.phone }}</td>
-          <td class="px-6 py-4 whitespace-nowrap border-b border-gray-200">
-            <span [ngClass]="{
-              'status-badge-pending': contact.status === 'Pending',
-              'status-badge-sent': contact.status === 'Sent',
-              'status-badge-failed': contact.status === 'Failed',
-              'status-badge-delivered': contact.status === 'Delivered'
-            }" class="status-badge">{{ contact.status }}</span>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap border-b border-gray-200">
-            <button class="p-1 rounded hover:bg-gray-100" title="View">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-            </button>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ contact.name }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ contact.phone }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <span [class]="getStatusClass(contact.status)" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
+              {{ contact.status || 'Pending' }}
+            </span>
+            <span *ngIf="contact.errorDetails" class="ml-2 text-xs text-red-600">
+              {{ contact.errorDetails }}
+            </span>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-  <div class="flex justify-between items-center mt-4 text-sm text-muted-foreground">
-    <span>{{ showingRange }}</span>
-    <div class="flex gap-1">
-      <button (click)="goToPage(page - 1)" [disabled]="page === 1" class="px-2 py-1 rounded border border-gray-200 bg-white disabled:opacity-50">&lt;</button>
-      <ng-container *ngFor="let p of [].constructor(totalPages); let i = index">
-        <button (click)="goToPage(i + 1)" [ngClass]="{'bg-gray-900 text-white': page === i + 1, 'bg-gray-100': page !== i + 1}" class="px-2 py-1 rounded border border-gray-200">{{ i + 1 }}</button>
-      </ng-container>
-      <button (click)="goToPage(page + 1)" [disabled]="page === totalPages" class="px-2 py-1 rounded border border-gray-200 bg-white disabled:opacity-50">&gt;</button>
+  <div class="mt-4 flex items-center justify-between">
+    <div class="text-sm text-gray-700">
+      {{ showingRange }}
+    </div>
+    <div class="flex space-x-2">
+      <button (click)="goToPage(page - 1)" 
+              [disabled]="page === 1"
+              class="px-3 py-1 rounded bg-gray-100 text-gray-700 disabled:opacity-50">
+        Previous
+      </button>
+      <button (click)="goToPage(page + 1)"
+              [disabled]="page === totalPages"
+              class="px-3 py-1 rounded bg-gray-100 text-gray-700 disabled:opacity-50">
+        Next
+      </button>
     </div>
   </div>
 </div>

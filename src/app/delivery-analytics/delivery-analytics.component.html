@@ -1,26 +1,22 @@
 <div class="grid grid-cols-3 gap-4 text-center">
   <div class="p-4 bg-gray-100 rounded-lg">
-    <p class="text-2xl font-bold">25</p>
+    <p class="text-2xl font-bold">{{ analytics.total }}</p>
     <p class="text-sm text-gray-600">Total</p>
   </div>
   <div class="p-4 bg-gray-100 rounded-lg">
-    <p class="text-2xl font-bold">18</p>
+    <p class="text-2xl font-bold">{{ analytics.sent }}</p>
     <p class="text-sm text-gray-600">Sent</p>
   </div>
   <div class="p-4 bg-gray-100 rounded-lg">
-    <p class="text-2xl font-bold">15</p>
-    <p class="text-sm text-gray-600">Delivered</p>
-  </div>
-  <div class="p-4 bg-gray-100 rounded-lg">
-    <p class="text-2xl font-bold">12</p>
-    <p class="text-sm text-gray-600">Read</p>
-  </div>
-  <div class="p-4 bg-gray-100 rounded-lg">
-    <p class="text-2xl font-bold">3</p>
+    <p class="text-2xl font-bold">{{ analytics.failed }}</p>
     <p class="text-sm text-gray-600">Failed</p>
   </div>
   <div class="p-4 bg-gray-100 rounded-lg">
-    <p class="text-2xl font-bold">4</p>
+    <p class="text-2xl font-bold">{{ analytics.skipped }}</p>
     <p class="text-sm text-gray-600">Skipped</p>
+  </div>
+  <div class="p-4 bg-gray-100 rounded-lg">
+    <p class="text-2xl font-bold">{{ analytics.pending }}</p>
+    <p class="text-sm text-gray-600">Pending</p>
   </div>
 </div>
