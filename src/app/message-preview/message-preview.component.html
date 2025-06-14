@@ -1,8 +1,11 @@
 <div class="bg-muted p-4 rounded-lg">
   <div class="bg-card p-4 rounded-lg shadow">
-    <div class="bg-muted h-32 mb-4 rounded-md flex items-center justify-center">
-      <span class="text-muted-foreground">Special Offer Image</span>
-    </div>
+    <ng-container *ngIf="headerType === 'Image'">
+      <div class="bg-muted h-32 mb-4 rounded-md flex items-center justify-center">
+        <img *ngIf="headerImage" [src]="headerImage" alt="Header Image" class="h-full max-h-32 w-auto object-contain rounded" />
+        <span *ngIf="!headerImage" class="text-muted-foreground">Special Offer Image</span>
+      </div>
+    </ng-container>
     <p class="mb-4 whitespace-pre-line">Hello {{ params.customerName || '{{name}}' }},
 
 We're excited to offer you {{ params.promotionDetails || '{{offer_details}}' }}! This exclusive deal is only available until {{ params.expiryDate || '{{expiry_date}}' }}.

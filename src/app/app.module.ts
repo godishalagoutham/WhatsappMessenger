@@ -10,6 +10,7 @@ import { MessageTemplateComponent } from './message-template/message-template.co
 import { MessagePreviewComponent } from './message-preview/message-preview.component';
 import { DeliveryAnalyticsComponent } from './delivery-analytics/delivery-analytics.component';
 import { ContactTableComponent } from './contact-table/contact-table.component';
+import { PdfShareComponent } from './pdf-share.component';
 import { LucideAngularModule, Upload, Users, Bell, User, FileText } from 'lucide-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -23,7 +24,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MessagePreviewComponent,
     DeliveryAnalyticsComponent,
     ContactTableComponent,
-    
+    PdfShareComponent,
   ],
   imports: [
     BrowserModule,

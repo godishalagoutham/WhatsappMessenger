@@ -9,14 +9,22 @@ import { TemplateParams, TemplateService } from '../services/template.service';
 })
 export class MessagePreviewComponent implements OnInit, OnDestroy {
   params: TemplateParams = { customerName: '', promotionDetails: '', expiryDate: '' };
+  headerType: 'Image' | 'Text' = 'Image';
+  headerImage: string | null = null;
   private subscription: Subscription = new Subscription();
 
   constructor(private templateService: TemplateService) {}
 
   ngOnInit(): void {
-    this.subscription = this.templateService.templateParams$.subscribe(params => {
+    this.subscription.add(this.templateService.templateParams$.subscribe(params => {
       this.params = params;
-    });
+    }));
+    this.subscription.add(this.templateService.headerType$.subscribe(type => {
+      this.headerType = type;
+    }));
+    this.subscription.add(this.templateService.headerImage$.subscribe(img => {
+      this.headerImage = img;
+    }));
   }
 
   ngOnDestroy(): void {

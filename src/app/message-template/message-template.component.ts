@@ -13,6 +13,8 @@ export class MessageTemplateComponent implements OnInit, OnDestroy {
     promotionDetails: '',
     expiryDate: ''
   };
+  headerType: 'Image' | 'Text' = 'Image';
+  headerText: string = '';
   headerImage: string | null = null;
   private subscription: Subscription = new Subscription();
 
@@ -22,10 +24,18 @@ export class MessageTemplateComponent implements OnInit, OnDestroy {
     this.subscription = this.templateService.templateParams$.subscribe(params => {
       this.templateParams = params;
     });
+    // Sync initial headerType and headerImage
+    this.templateService.updateHeaderType(this.headerType);
+    this.templateService.updateHeaderImage(this.headerImage);
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  onHeaderTypeChange(type: 'Image' | 'Text') {
+    this.headerType = type;
+    this.templateService.updateHeaderType(type);
   }
 
   onImageSelected(event: Event): void {
@@ -36,6 +46,7 @@ export class MessageTemplateComponent implements OnInit, OnDestroy {
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
         this.headerImage = e.target?.result as string;
+        this.templateService.updateHeaderImage(this.headerImage);
       };
       reader.readAsDataURL(file);
     }

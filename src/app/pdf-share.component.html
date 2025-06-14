@@ -1,0 +1,82 @@
+<div class="pdf-share-container w-full max-w-4xl mx-auto">
+  <h2 class="text-2xl font-semibold mb-6">Share PDF to Contacts</h2>
+  <div class="grid md:grid-cols-2 gap-8">
+    <!-- PDF Upload -->
+    <div>
+      <label class="block mb-2 font-medium">Select PDF File</label>
+      <input type="file" accept="application/pdf" (change)="onFileSelected($event)" [disabled]="sending" />
+      <div *ngIf="pdfFileName" class="mt-2 text-sm text-green-700">Selected: {{ pdfFileName }}</div>
+    </div>
+    <!-- Contact Selection Table -->
+    <div>
+      <label class="block mb-2 font-medium">Select Contacts</label>
+      <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="applySearch()" placeholder="Search by name or phone" class="mb-2 w-full px-3 py-2 border rounded" [disabled]="sending" />
+      <div class="bg-gray-50 rounded border max-h-64 overflow-y-auto">
+        <ng-container *ngIf="pagedContacts.length > 0; else noContacts">
+          <table class="min-w-full bg-white">
+            <thead>
+              <tr>
+                <th class="px-2 py-2 text-left w-8">
+                  <input type="checkbox" [checked]="isAllSelectedOnPage()" (change)="selectAllOnPage($event)" [disabled]="sending" />
+                </th>
+                <th class="px-2 py-2 text-left">Name</th>
+                <th class="px-2 py-2 text-left">Phone</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let contact of pagedContacts">
+                <td class="px-2 py-2">
+                  <input type="checkbox" [checked]="isSelected(contact.phone)" (change)="toggleContact(contact.phone)" [disabled]="sending" />
+                </td>
+                <td class="px-2 py-2">{{ contact.name }}</td>
+                <td class="px-2 py-2">{{ contact.phone }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-container>
+        <ng-template #noContacts>
+          <div class="p-4 text-muted-foreground text-center">No contacts available. Please upload a CSV first.</div>
+        </ng-template>
+      </div>
+      <!-- Pagination -->
+      <div *ngIf="totalPages > 1" class="flex justify-end gap-1 mt-2">
+        <button (click)="goToPage(page - 1)" [disabled]="page === 1" class="px-2 py-1 rounded border border-gray-200 bg-white disabled:opacity-50">&lt;</button>
+        <ng-container *ngFor="let p of [].constructor(totalPages); let i = index">
+          <button (click)="goToPage(i + 1)" [ngClass]="{'bg-gray-900 text-white': page === i + 1, 'bg-gray-100': page !== i + 1}" class="px-2 py-1 rounded border border-gray-200">{{ i + 1 }}</button>
+        </ng-container>
+        <button (click)="goToPage(page + 1)" [disabled]="page === totalPages" class="px-2 py-1 rounded border border-gray-200 bg-white disabled:opacity-50">&gt;</button>
+      </div>
+    </div>
+  </div>
+  <!-- Send Button -->
+  <div class="mt-8 flex gap-4">
+    <button (click)="sendPdf()" [disabled]="!pdfFile || selectedContacts.size === 0 || sending" class="bg-primary text-white px-8 py-2 rounded font-semibold disabled:opacity-50">{{ sending ? 'Sending...' : 'Send PDF' }}</button>
+    <button (click)="reset()" [disabled]="sending" class="bg-gray-200 text-gray-700 px-6 py-2 rounded font-semibold">Reset</button>
+  </div>
+  <!-- Confirmation/Status -->
+  <div *ngIf="sendStatus.length > 0" class="mt-8">
+    <h3 class="text-lg font-semibold mb-4">Send Status</h3>
+    <table class="min-w-full bg-white border rounded">
+      <thead>
+        <tr>
+          <th class="px-4 py-2 text-left">Contact</th>
+          <th class="px-4 py-2 text-left">Phone</th>
+          <th class="px-4 py-2 text-left">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of sendStatus">
+          <td class="px-4 py-2">{{ s.contact.name }}</td>
+          <td class="px-4 py-2">{{ s.contact.phone }}</td>
+          <td class="px-4 py-2">
+            <span [ngClass]="{
+              'text-green-600': s.status === 'success',
+              'text-red-600': s.status === 'error',
+              'text-yellow-600': s.status === 'pending'
+            }">{{ s.status === 'success' ? 'Sent' : s.status === 'error' ? 'Failed' : 'Pending' }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div> 
